@@ -47,7 +47,7 @@ class matrix:
     def __sub__(self, otherMatrix):
         """Subtract two matricies"""
 
-        newArray = otherMatrix.array
+        newArray = list(otherMatrix.array)
 
         for row in range(len(newArray)):
             for col in range(len(newArray[0])):
@@ -58,9 +58,22 @@ class matrix:
 
 
     def __mul__(self, otherMatrix):
+        """Multiply two matricies together"""
         if not (len(self.array[0]) == len(otherMatrix.array)):
             raise ArithmeticError
 
+        common = len(self.array[0])
+        X = len(self.array)
+        Y = len(otherMatrix.array[0])
+        newArray = [[0 for x in range(X)] for x in range(Y)]
+
+        for row in range(X):
+            for col in range(Y):
+                for elem in range(common):
+                    newArray[row][col] += self.array[row][elem] * otherMatrix.array[elem][col]
+
+
+        return matrix(newArray)
 
 
 
@@ -73,6 +86,8 @@ class matrix:
 M1 = matrix([[1,2],[3,4]])
 M2 = matrix([[1,4],[3,5]])
 M3 = M1+M2
-M4 = M1-M2
 print(M3)
+M4 = M1-M2
 print(M4)
+M5 = M1*M2
+print(M5)
